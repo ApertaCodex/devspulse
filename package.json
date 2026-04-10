@@ -1,0 +1,323 @@
+{
+  "name": "devspulse",
+  "displayName": "DevPulse — Developer Productivity Insights",
+  "description": "Automatically tracks coding activity and transforms it into meaningful productivity insights. Goes beyond time tracking to reveal work intent, focus patterns, context switching, and AI-powered coaching.",
+  "version": "1.10.0",
+  "publisher": "apertacodex",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/apertacodex/devpulse.git"
+  },
+  "bugs": {
+    "url": "https://github.com/apertacodex/devpulse/issues"
+  },
+  "homepage": "https://github.com/apertacodex/devpulse#readme",
+  "engines": {
+    "vscode": "^1.108.0"
+  },
+  "categories": [
+    "Other",
+    "Visualization",
+    "Data Science"
+  ],
+  "keywords": [
+    "productivity",
+    "time tracking",
+    "analytics",
+    "wakatime",
+    "developer insights",
+    "focus",
+    "coding stats",
+    "git",
+    "ai coaching",
+    "flow state"
+  ],
+  "icon": "resources/icon.png",
+  "galleryBanner": {
+    "color": "#0f172a",
+    "theme": "dark"
+  },
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "devpulse-sidebar",
+          "title": "DevPulse",
+          "icon": "resources/activity-bar-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "devpulse-sidebar": [
+        {
+          "id": "devpulse.todayView",
+          "name": "Today's Activity",
+          "icon": "$(calendar)",
+          "contextualTitle": "DevPulse"
+        },
+        {
+          "id": "devpulse.insightsView",
+          "name": "Insights & Coaching",
+          "icon": "$(lightbulb)",
+          "contextualTitle": "DevPulse"
+        },
+        {
+          "id": "devpulse.projectsView",
+          "name": "Projects & Languages",
+          "icon": "$(folder)",
+          "contextualTitle": "DevPulse"
+        },
+        {
+          "id": "devpulse.focusView",
+          "name": "Focus & Flow",
+          "icon": "$(eye)",
+          "contextualTitle": "DevPulse"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "devpulse.refresh",
+        "title": "Refresh Stats",
+        "icon": "$(refresh)",
+        "category": "DevPulse"
+      },
+      {
+        "command": "devpulse.openDashboard",
+        "title": "Open Dashboard",
+        "icon": "$(graph)",
+        "category": "DevPulse"
+      },
+      {
+        "command": "devpulse.startFocusSession",
+        "title": "Start Focus Session",
+        "icon": "$(target)",
+        "category": "DevPulse"
+      },
+      {
+        "command": "devpulse.stopFocusSession",
+        "title": "Stop Focus Session",
+        "icon": "$(debug-stop)",
+        "category": "DevPulse"
+      },
+      {
+        "command": "devpulse.showWeeklyReport",
+        "title": "Show Weekly Report",
+        "icon": "$(report)",
+        "category": "DevPulse"
+      },
+      {
+        "command": "devpulse.toggleTracking",
+        "title": "Toggle Tracking On/Off",
+        "icon": "$(record)",
+        "category": "DevPulse"
+      },
+      {
+        "command": "devpulse.clearData",
+        "title": "Clear All Tracking Data",
+        "icon": "$(trash)",
+        "category": "DevPulse"
+      },
+      {
+        "command": "devpulse.exportData",
+        "title": "Export Data as JSON",
+        "icon": "$(export)",
+        "category": "DevPulse"
+      },
+      {
+        "command": "devpulse.showAIInsights",
+        "title": "Generate AI Insights",
+        "icon": "$(sparkle)",
+        "category": "DevPulse"
+      },
+      {
+        "command": "devpulse.configureSettings",
+        "title": "Configure DevPulse Settings",
+        "icon": "$(settings-gear)",
+        "category": "DevPulse"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "devpulse.refresh",
+          "when": "view =~ /devpulse/",
+          "group": "navigation@1"
+        },
+        {
+          "command": "devpulse.openDashboard",
+          "when": "view =~ /devpulse/",
+          "group": "navigation@2"
+        },
+        {
+          "command": "devpulse.startFocusSession",
+          "when": "view =~ /devpulse/ && !devpulse.focusActive",
+          "group": "navigation@3"
+        },
+        {
+          "command": "devpulse.stopFocusSession",
+          "when": "view =~ /devpulse/ && devpulse.focusActive",
+          "group": "navigation@3"
+        },
+        {
+          "command": "devpulse.showWeeklyReport",
+          "when": "view =~ /devpulse/",
+          "group": "overflow@1"
+        },
+        {
+          "command": "devpulse.exportData",
+          "when": "view =~ /devpulse/",
+          "group": "overflow@2"
+        },
+        {
+          "command": "devpulse.toggleTracking",
+          "when": "view =~ /devpulse/",
+          "group": "overflow@3"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "devpulse.stopFocusSession",
+          "when": "devpulse.focusActive"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "devpulse.startFocusSession",
+        "key": "ctrl+alt+f",
+        "mac": "cmd+alt+f",
+        "when": "!devpulse.focusActive"
+      },
+      {
+        "command": "devpulse.stopFocusSession",
+        "key": "ctrl+alt+f",
+        "mac": "cmd+alt+f",
+        "when": "devpulse.focusActive"
+      },
+      {
+        "command": "devpulse.openDashboard",
+        "key": "ctrl+alt+d",
+        "mac": "cmd+alt+d"
+      },
+      {
+        "command": "devpulse.showWeeklyReport",
+        "key": "ctrl+alt+r",
+        "mac": "cmd+alt+r"
+      }
+    ],
+    "configuration": {
+      "title": "DevPulse",
+      "properties": {
+        "devpulse.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable or disable activity tracking."
+        },
+        "devpulse.idleThresholdMinutes": {
+          "type": "number",
+          "default": 5,
+          "minimum": 1,
+          "maximum": 60,
+          "description": "Minutes of inactivity before session is considered idle."
+        },
+        "devpulse.focusSessionGoalMinutes": {
+          "type": "number",
+          "default": 90,
+          "minimum": 15,
+          "maximum": 480,
+          "description": "Default goal duration (minutes) for a focus session."
+        },
+        "devpulse.contextSwitchThresholdSeconds": {
+          "type": "number",
+          "default": 30,
+          "minimum": 5,
+          "maximum": 300,
+          "description": "Seconds in a file before switching counts as a context switch."
+        },
+        "devpulse.showStatusBar": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show today's coding time in the status bar."
+        },
+        "devpulse.statusBarFormat": {
+          "type": "string",
+          "enum": [
+            "time",
+            "time+intent",
+            "focus"
+          ],
+          "default": "time+intent",
+          "description": "What to display in the status bar item."
+        },
+        "devpulse.privacyMode": {
+          "type": "boolean",
+          "default": true,
+          "description": "Privacy-first mode: all data stored locally, nothing sent externally."
+        },
+        "devpulse.dataRetentionDays": {
+          "type": "number",
+          "default": 90,
+          "minimum": 7,
+          "maximum": 365,
+          "description": "Number of days to retain activity data locally."
+        },
+        "devpulse.aiInsightsEnabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable AI-powered productivity insights and coaching."
+        },
+        "devpulse.notifyContextSwitching": {
+          "type": "boolean",
+          "default": false,
+          "description": "Show a notification when excessive context switching is detected."
+        },
+        "devpulse.workdayStartHour": {
+          "type": "number",
+          "default": 9,
+          "minimum": 0,
+          "maximum": 23,
+          "description": "Hour (0-23) when your workday starts, used for productivity analysis."
+        },
+        "devpulse.workdayEndHour": {
+          "type": "number",
+          "default": 18,
+          "minimum": 1,
+          "maximum": 24,
+          "description": "Hour (0-23) when your workday ends, used for productivity analysis."
+        },
+        "devpulse.excludePatterns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "**/node_modules/**",
+            "**/.git/**",
+            "**/dist/**",
+            "**/out/**"
+          ],
+          "description": "Glob patterns for files to exclude from tracking."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.108.1",
+    "@types/node": "^25.0.9",
+    "typescript": "^5.9.3",
+    "ovsx": "^0.10.8"
+  },
+  "dependencies": {}
+}
